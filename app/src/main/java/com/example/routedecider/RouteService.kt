@@ -3,6 +3,7 @@ package com.example.routedecider
 import retrofit2.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -65,7 +66,13 @@ class RouteService {
         )
 
         if (response.isSuccessful) {
-            return response.body()
+            val directionsResponse = response.body()
+            val gson = GsonBuilder().setPrettyPrinting().create()
+
+            val formattedJson = gson.toJson(directionsResponse)
+            Timber.tag("API_RESPONSE").d(formattedJson)
+
+            return directionsResponse
         } else {
             val errorBody = response.errorBody()?.string()
             Timber.tag("Error").e("Error body: $errorBody")
