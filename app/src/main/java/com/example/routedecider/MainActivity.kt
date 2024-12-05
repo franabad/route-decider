@@ -29,13 +29,12 @@ class MainActivity : AppCompatActivity() {
             )
             val travelMode = "DRIVE"
             val routingPreference = "TRAFFIC_AWARE_OPTIMAL"
-            val fieldMask = "*"
+            val fieldMask = "routes.description,routes.localizedValues.distance,routes.localizedValues.duration"
             val apiKey = getString(R.string.api_key)
 
             val response = routeService.getRoute(origin, destination, travelMode, routingPreference, apiKey, fieldMask)
 
 //            NotificationHelper.sendNotification(this@MainActivity, route)
-            Timber.d("Route Response: %s", response)
         }
     }
 }
